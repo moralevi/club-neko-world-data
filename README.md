@@ -16,7 +16,7 @@ Served from `raw.githubusercontent.com`, which VRChat String Loading trusts.
 {
   "version": 1,
   "updated": "2026-11-16T02:00:00Z",
-  "staff":   ["Mora"],
+  "staff":   ["Estrellalevi"],
   "vipPlus": [],
   "vip":     []
 }
