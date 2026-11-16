@@ -7,7 +7,7 @@ Served from `raw.githubusercontent.com`, which VRChat String Loading trusts.
 |---|---|---|
 | `access.json` | Club Neko bot (role sync) | `NekoAccess` |
 | `events.json` | Staff (manual), Phase 1 | Plaza event board |
-| `leaderboard.json` | Bot (`/submit`), Phase 5 | Plaza leaderboard wall |
+| `leaderboard.json` | Bot (`/submit`), Phase 5 | Games room leaderboard wall (`NekoLeaderboard`) |
 | `gallery.json` + images | Staff (manual), Phase 6 | Art Loft gallery |
 
 ## access.json
@@ -46,6 +46,24 @@ Shown on the plaza event board. Edit it on GitHub and the board updates within a
 
 - `when` is shown exactly as written, so include a time zone.
 - Remove `next` entirely when nothing is scheduled.
+
+## leaderboard.json
+
+Written by the bot after each accepted `/submit` (top 10 per stat, best first). Don't edit it by hand: the bot
+rebuilds it from its own database. The world re-downloads it every 5 minutes.
+
+```json
+{
+  "version": 1,
+  "updated": "2026-11-16T22:00:00Z",
+  "stats": {
+    "pool_wins":      [{ "name": "Estrellalevi", "value": 12 }],
+    "darts_best":     [],
+    "bowling_best":   [],
+    "airhockey_wins": []
+  }
+}
+```
 
 ## Checks
 

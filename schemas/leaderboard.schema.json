@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "leaderboard.schema.json",
+  "title": "Club Neko global leaderboard",
+  "description": "Written by the Club Neko bot from /submit codes. Read by NekoLeaderboard in the world (games room wall).",
+  "type": "object",
+  "required": ["version", "updated", "stats"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": 1 },
+    "updated": { "type": "string", "format": "date-time" },
+    "stats": {
+      "type": "object",
+      "required": ["pool_wins", "darts_best", "bowling_best", "airhockey_wins"],
+      "additionalProperties": false,
+      "properties": {
+        "pool_wins":      { "$ref": "#/$defs/top" },
+        "darts_best":     { "$ref": "#/$defs/top", "items": { "properties": { "value": { "maximum": 180 } } } },
+        "bowling_best":   { "$ref": "#/$defs/top", "items": { "properties": { "value": { "maximum": 300 } } } },
+        "airhockey_wins": { "$ref": "#/$defs/top" }
+      }
+    }
+  },
+  "$defs": {
+    "top": {
+      "type": "array",
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["name", "value"],
+        "additionalProperties": false,
+        "properties": {
+          "name":  { "type": "string", "minLength": 1, "maxLength": 64 },
+          "value": { "type": "integer", "minimum": 1 }
+        }
+      }
+    }
+  }
+}
