@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "access.schema.json",
+  "title": "Club Neko access list",
+  "description": "Written by the Club Neko bot (role sync). Read by NekoAccess in the world.",
+  "type": "object",
+  "required": ["version", "updated", "staff", "vipPlus", "vip"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": 1 },
+    "updated": { "type": "string", "format": "date-time" },
+    "staff":   { "$ref": "#/$defs/names" },
+    "vipPlus": { "$ref": "#/$defs/names" },
+    "vip":     { "$ref": "#/$defs/names" }
+  },
+  "$defs": {
+    "names": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1, "maxLength": 64 }
+    }
+  }
+}

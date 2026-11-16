@@ -1,0 +1,18 @@
+name: Validate world data
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validate JSON against schemas
+        run: |
+          npx --yes ajv-cli@5.0.0 validate --spec=draft2020 -c ajv-formats \
+            -s schemas/access.schema.json -d access.json
