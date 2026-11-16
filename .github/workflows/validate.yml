@@ -14,5 +14,5 @@ jobs:
           node-version: 20
       - name: Validate JSON against schemas
         run: |
-          npx --yes ajv-cli@5.0.0 validate --spec=draft2020 -c ajv-formats \
+          npx --yes -p ajv-cli@5.0.0 -p ajv-formats@3.0.1 ajv validate --spec=draft2020 -c ajv-formats \
             -s schemas/access.schema.json -d access.json
