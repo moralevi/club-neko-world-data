@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "events.schema.json",
+  "title": "Club Neko event board",
+  "description": "Edited by staff. Read by the plaza event board (NekoEventBoard). 'when' is free text shown as-is.",
+  "type": "object",
+  "required": ["version", "updated"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": 1 },
+    "updated": { "type": "string", "format": "date-time" },
+    "next": {
+      "type": "object",
+      "required": ["title"],
+      "additionalProperties": false,
+      "properties": {
+        "title":   { "type": "string", "minLength": 1, "maxLength": 60 },
+        "when":    { "type": "string", "maxLength": 60 },
+        "dj":      { "type": "string", "maxLength": 40 },
+        "details": { "type": "string", "maxLength": 160 }
+      }
+    },
+    "announcements": {
+      "type": "array",
+      "maxItems": 5,
+      "items": { "type": "string", "minLength": 1, "maxLength": 100 }
+    }
+  }
+}

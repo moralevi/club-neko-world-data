@@ -16,3 +16,5 @@ jobs:
         run: |
           npx --yes -p ajv-cli@5.0.0 -p ajv-formats@3.0.1 ajv validate --spec=draft2020 -c ajv-formats \
             -s schemas/access.schema.json -d access.json
+          npx --yes -p ajv-cli@5.0.0 -p ajv-formats@3.0.1 ajv validate --spec=draft2020 -c ajv-formats \
+            -s schemas/events.schema.json -d events.json
