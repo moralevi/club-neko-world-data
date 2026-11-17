@@ -1,0 +1,34 @@
+name: Build supporter photos
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "supporters.json"
+      - "photos/**"
+      - "tools/build_supporter_photos.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pillow==11.0.0
+      - run: python tools/build_supporter_photos.py
+      - name: Commit supporters.png if it changed
+        run: |
+          if git diff --quiet -- supporters.png && git ls-files --error-unmatch supporters.png >/dev/null 2>&1; then
+            echo "supporters.png unchanged"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add supporters.png
+          git commit -m "Rebuild supporters.png"
+          git push

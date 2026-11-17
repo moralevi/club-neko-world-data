@@ -8,7 +8,8 @@ Served from `raw.githubusercontent.com`, which VRChat String Loading trusts.
 | `access.json` | Club Neko bot (role sync) | `NekoAccess` |
 | `events.json` | Staff (manual), Phase 1 | Plaza event board |
 | `leaderboard.json` | Bot (`/submit`), Phase 5 | Games room leaderboard wall (`NekoLeaderboard`) |
-| `gallery.json` + images | Staff (manual), Phase 6 | Art Loft gallery |
+| `supporters.json` + `photos/` | Staff (manual) | Supporter wall on the front lawn (`NekoSupporterWall`) |
+| `supporters.png` | GitHub Action (from `photos/`) | Supporter wall photos, via GitHub Pages |
 
 ## access.json
 
@@ -68,3 +69,39 @@ rebuilds it from its own database. The world re-downloads it every 5 minutes.
 ## Checks
 
 `.github/workflows/validate.yml` validates each file against `schemas/` on push.
+
+## supporters.json (supporter wall)
+
+The board on the front lawn, facing the fountain. Left: a photo spotlight (8 at a time, turning every 10 seconds).
+Right: names by tier. **VIP+ and VIP names from `access.json` are shown automatically**, so this file is only for
+extra people, captions and photos.
+
+```json
+{
+  "version": 1,
+  "updated": "2026-11-17T07:00:00Z",
+  "message": "Optional subtitle, max 80 chars",
+  "supporters": [
+    { "name": "Somebody", "tier": "vipplus", "caption": "Optional, max 40 chars", "photo": "somebody.png" },
+    { "name": "Someone Else", "tier": "special", "caption": "Made the cat statues" }
+  ]
+}
+```
+
+- `tier` is `vipplus`, `vip`, `supporter` (the default) or `special` (shown as "Special thanks").
+- Bump `updated` whenever you change the file: the world only re-downloads the photos when it changes.
+- Spotlight order is file order. People in the instance right now are highlighted in gold.
+
+### Photos
+
+1. Put the picture in `photos/` (png, jpg or webp, any size; it is centre-cropped to a square).
+2. Set that entry's `"photo"` to the file name.
+3. Push. The **Build supporter photos** action rebuilds `supporters.png` (an 8 x 8 grid, one 256 px cell per
+   entry with a photo, in file order; up to 64) and commits it.
+
+VRChat only downloads images from trusted hosts and `raw.githubusercontent.com` isn't one, so the world loads
+`supporters.png` from **GitHub Pages**: `https://moralevi.github.io/club-neko-world-data/supporters.png`.
+Pages must be on for this repo (Settings > Pages > Deploy from a branch > `main` / root). `.nojekyll` makes Pages
+serve the files as they are. Players with "Allow Untrusted URLs" off still see photos, because `*.github.io` is trusted.
+
+Local build: `pip install pillow` then `python tools/build_supporter_photos.py`.

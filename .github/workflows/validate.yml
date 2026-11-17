@@ -20,3 +20,5 @@ jobs:
             -s schemas/events.schema.json -d events.json
           npx --yes -p ajv-cli@5.0.0 -p ajv-formats@3.0.1 ajv validate --spec=draft2020 -c ajv-formats \
             -s schemas/leaderboard.schema.json -d leaderboard.json
+          npx --yes -p ajv-cli@5.0.0 -p ajv-formats@3.0.1 ajv validate --spec=draft2020 -c ajv-formats \
+            -s schemas/supporters.schema.json -d supporters.json

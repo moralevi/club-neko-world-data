@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "supporters.schema.json",
+  "title": "Club Neko supporter wall",
+  "description": "Edited by staff. Read by the supporter wall (NekoSupporterWall). Every entry with a photo gets the next cell of supporters.png, in file order (tools/build_supporter_photos.py builds it).",
+  "type": "object",
+  "required": ["version", "updated", "supporters"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": 1 },
+    "updated": { "type": "string", "format": "date-time" },
+    "message": { "type": "string", "maxLength": 80 },
+    "supporters": {
+      "type": "array",
+      "maxItems": 200,
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "additionalProperties": false,
+        "properties": {
+          "name":    { "type": "string", "minLength": 1, "maxLength": 40 },
+          "tier":    { "enum": ["vipplus", "vip", "supporter", "special"] },
+          "caption": { "type": "string", "maxLength": 40 },
+          "photo":   { "type": "string", "pattern": "^[A-Za-z0-9._ -]+\\.(png|jpg|jpeg|webp)$" }
+        }
+      }
+    }
+  }
+}
