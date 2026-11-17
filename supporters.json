@@ -1,6 +1,12 @@
 {
   "version": 1,
-  "updated": "2026-11-17T07:00:00Z",
+  "updated": "2026-11-17T12:30:00Z",
   "message": "Club Neko is kept running by these wonderful people",
-  "supporters": []
+  "supporters": [
+    {
+      "name": "Nekomanz",
+      "tier": "vipplus",
+      "photo": "Nekomanz.jpg"
+    }
+  ]
 }
