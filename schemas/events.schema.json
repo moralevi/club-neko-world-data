@@ -2,28 +2,94 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "events.schema.json",
   "title": "Club Neko event board",
-  "description": "Edited by staff. Read by the plaza event board (NekoEventBoard). 'when' is free text shown as-is.",
+  "description": "Edited by staff. Read by the event board by the manor gate (NekoEventBoard). 'when' is free text shown as-is; the optional 'start' (UTC) adds a countdown.",
   "type": "object",
-  "required": ["version", "updated"],
+  "required": [
+    "version",
+    "updated"
+  ],
   "additionalProperties": false,
   "properties": {
-    "version": { "const": 1 },
-    "updated": { "type": "string", "format": "date-time" },
+    "version": {
+      "const": 1
+    },
+    "updated": {
+      "type": "string",
+      "format": "date-time"
+    },
     "next": {
       "type": "object",
-      "required": ["title"],
+      "required": [
+        "title"
+      ],
       "additionalProperties": false,
       "properties": {
-        "title":   { "type": "string", "minLength": 1, "maxLength": 60 },
-        "when":    { "type": "string", "maxLength": 60 },
-        "dj":      { "type": "string", "maxLength": 40 },
-        "details": { "type": "string", "maxLength": 160 }
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "when": {
+          "type": "string",
+          "maxLength": 60
+        },
+        "dj": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "details": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "start": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}(:[0-9]{2})?Z$",
+          "description": "UTC start time, e.g. 2026-11-28T20:00:00Z. Shows 'Starts in ...', then 'Happening now!' for durationMinutes, then 'Ended'."
+        },
+        "durationMinutes": {
+          "type": "integer",
+          "minimum": 15,
+          "maximum": 720,
+          "description": "How long 'Happening now!' shows after the start (default 180)."
+        }
       }
     },
     "announcements": {
       "type": "array",
       "maxItems": 5,
-      "items": { "type": "string", "minLength": 1, "maxLength": 100 }
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 100
+      }
+    },
+    "later": {
+      "type": "array",
+      "maxItems": 4,
+      "description": "A few events after the next one, listed under LATER.",
+      "items": {
+        "type": "object",
+        "required": [
+          "title"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 60
+          },
+          "when": {
+            "type": "string",
+            "maxLength": 60
+          },
+          "start": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}(:[0-9]{2})?Z$",
+            "description": "UTC start time, e.g. 2026-11-28T20:00:00Z. Shows 'Starts in ...', then 'Happening now!' for durationMinutes, then 'Ended'."
+          }
+        }
+      }
     }
   }
 }

@@ -6,7 +6,7 @@ Served from `raw.githubusercontent.com`, which VRChat String Loading trusts.
 | File | Written by | Read by |
 |---|---|---|
 | `access.json` | Club Neko bot (role sync) | `NekoAccess` |
-| `events.json` | Staff (manual), Phase 1 | Plaza event board |
+| `events.json` | Staff (manual), Phase 1 | Event board by the manor gate |
 | `leaderboard.json` | Bot (`/submit`), Phase 5 | Games room leaderboard wall (`NekoLeaderboard`) |
 | `supporters.json` + `photos/` | Staff (manual) | Supporter wall on the front lawn (`NekoSupporterWall`) |
 | `supporters.png` | GitHub Action (from `photos/`) | Supporter wall photos, via GitHub Pages |
@@ -33,19 +33,32 @@ Served from `raw.githubusercontent.com`, which VRChat String Loading trusts.
 
 ## events.json
 
-Shown on the plaza event board. Edit it on GitHub and the board updates within about 15 minutes
-(the board re-checks every 10 minutes, plus the raw CDN cache).
+Shown on the event board by the manor gate (next to the guestbook). Edit it on GitHub and the board updates within
+about 15 minutes (the board re-checks every 10 minutes, plus the raw CDN cache).
 
 ```json
 {
   "version": 1,
   "updated": "2026-11-16T04:00:00Z",
-  "next": { "title": "Neon Night", "when": "Sat 22 Nov · 8pm GMT", "dj": "Somebody", "details": "Optional, max 160 chars" },
+  "next": {
+    "title": "Neon Night",
+    "when": "Sat 22 Nov · 8pm GMT",
+    "start": "2026-11-22T20:00:00Z",
+    "durationMinutes": 180,
+    "dj": "Somebody",
+    "details": "Optional, max 160 chars"
+  },
+  "later": [
+    { "title": "Pool Party", "when": "Sat 29 Nov · 9pm GMT", "start": "2026-11-29T21:00:00Z" }
+  ],
   "announcements": ["Up to 5 short lines"]
 }
 ```
 
 - `when` is shown exactly as written, so include a time zone.
+- `start` is optional, in UTC with a `Z` on the end. With it the board shows "Starts in 2d 4h 13m", then
+  "Happening now!" for `durationMinutes` (default 180), then "Ended".
+- `later` is optional: up to 4 more events, listed under LATER.
 - Remove `next` entirely when nothing is scheduled.
 
 ## leaderboard.json
